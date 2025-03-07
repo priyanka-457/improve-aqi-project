@@ -1,0 +1,125 @@
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f7fafc;
+    color: #2d3748;
+}
+.bg-container {
+    background-image: url("https://www.breeze-technologies.de/wp-content/uploads/2019/06/holger-link-748973-unsplash-1030x687.jpg");
+    background-size: cover;
+    background-position: center;
+    height: 160vh;
+}
+}
+
+/* Container Styles */
+.max-w-lg {
+    max-width: 60rem;
+}
+.image1{
+    height:30vh;
+    width:30vh;
+}
+
+.mx-auto {
+    margin-left: auto;
+    margin-right: auto;
+}
+.head{
+    color:#0f1ebf;
+}
+
+.bg-white {
+    background-color: #ffffff;
+}
+
+.p-6 {
+    padding: 1.5rem;
+}
+
+.rounded {
+    border-radius: 0.375rem;
+}
+
+.shadow-md {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.mt-6 {
+    margin-top: 1.5rem;
+}
+
+.mb-4 {
+    margin-bottom: 1rem;
+}
+
+.mb-2 {
+    margin-bottom: 0.5rem;
+}
+
+/* Form Styles */
+#reportForm input[type="text"],
+#reportForm textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.25rem;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    color: #4a5568;
+}
+
+#reportForm input[type="text"]:focus,
+#reportForm textarea:focus {
+    outline: none;
+    border-color: #4299e1;
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+}
+
+#reportForm textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+#reportForm input[type="file"] {
+    margin-bottom: 1rem;
+}
+
+/* Button Styles */
+button[type="submit"] {
+    background-color: #4299e1;
+    color: #ffffff;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 0.25rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: #3182ce;
+}
+
+/* Dashboard Styles */
+#username,
+#points {
+    font-weight: bold;
+    color: #2b6cb0;
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+    .p-6 {
+        padding: 1rem;
+    }
+
+    .text-xl {
+        font-size: 1.25rem;
+    }
+
+    button[type="submit"] {
+        width: 100%;
+        padding: 0.75rem;
+    }
+}

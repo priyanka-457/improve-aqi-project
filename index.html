@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Air Quality Reporter</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-container p-6">
+    <!-- Marquee Section -->
+    <marquee behavior="scroll" direction="left" class="bg-blue-500 text-white py-2">
+        🌿 Improve Air Quality Index! Keep up the good work! 🌿
+    </marquee>
+
+    <!-- AQI Status Section (Moved to the top) -->
+    <div class="max-w-lg mx-auto bg-white p-6 rounded shadow-md">
+        <h2 class="  head text-xl text-blue font-bold mb-4">Check Air Quality Index (AQI) Status</h2>
+        <input type="number" id="aqiInput" placeholder="Enter AQI Value" class="border p-2 w-full mb-2" required>
+        <button onclick="fetchAqiStatus()" class="bg-blue-500 text-white px-4 py-2 rounded">Get AQI Status</button>
+        <div id="aqiStatusResult" class="mt-4 p-4 bg-gray-50 rounded"></div>
+    </div>
+
+    <!-- Report Section (Moved to the middle) -->
+    <div class="max-w-lg mx-auto bg-white p-6 rounded shadow-md mt-6">
+        <h2 class="head text-xl text-blue font-bold mb-4">Report Air Quality Issue</h2>
+        <form id="reportForm">
+            <input type="text" id="location" placeholder="Factory Location" class="border p-2 w-full mb-2" required>
+            <textarea id="description" placeholder="Describe Pollution Issue" class="border p-2 w-full mb-2"></textarea>
+            <input type="file" id="image" class="mb-2">
+            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Submit Report</button>
+        </form>
+    </div>
+
+    <!-- Dashboard Section (Moved to the bottom) -->
+    <div class="max-w-lg mx-auto bg-white p-6 rounded shadow-md mt-6">
+        <img src="C:\Users\HP\Downloads\1e497f9c-14a6-4b9b-a806-49cde11d45d8-cover.png" class="w-25 mb-4" />
+        <h2 class="head text-xl text-white font-bold mb-4">User Dashboard</h2>
+        <p><strong>Username:</strong> <span id="username"></span></p>
+        <p><strong>Points:</strong> <span id="points"></span></p>
+    </div>
+
+    <script>
+        const userId = 1; // Default user ID for testing
+
+        // Fetch AQI Status
+        async function fetchAqiStatus() {
+            const aqi = document.getElementById("aqiInput").value;
+            if (!aqi) {
+                alert("Please enter an AQI value.");
+                return;
+            }
+
+            let response = await fetch(`http://localhost:5000/aqi-status?aqi=${aqi}`);
+            let data = await response.json();
+            document.getElementById("aqiStatusResult").innerHTML = `
+                <p><strong>AQI:</strong> ${data.aqi}</p>
+                <p><strong>Status:</strong> ${data.status}</p>
+            `;
+        }
+
+        // Handle Report Submission
+        document.getElementById("reportForm").addEventListener("submit", async function(event) {
+            event.preventDefault();
+
+            let formData = new FormData();
+            formData.append("location", document.getElementById("location").value);
+            formData.append("description", document.getElementById("description").value);
+            formData.append("image", document.getElementById("image").files[0]);
+            formData.append("user_id", userId);
+
+            let response = await fetch("http://localhost:5000/report", { method: "POST", body: formData });
+            let data = await response.json();
+            alert(data.message);
+
+            // Refresh dashboard after report submission
+            fetchDashboard();
+        });
+
+        // Fetch User Dashboard Data
+        async function fetchDashboard() {
+            let response = await fetch(`http://localhost:5000/user-dashboard/${userId}`);
+            let data = await response.json();
+            document.getElementById("username").innerText = data.username;
+            document.getElementById("points").innerText = data.points;
+        }
+
+        // Fetch dashboard data on page load
+        fetchDashboard();
+    </script>
+</body>
+</html>
